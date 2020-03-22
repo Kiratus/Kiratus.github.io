@@ -1,28 +1,19 @@
 let fulldata = document.querySelector('h1#data')
+let data = new Date()
+
+uptSau(Number(data.getHours()))
+
+uptDia(Number(data.getDate()))
+uptSem(Number(data.getDay()))
+
+uptHora(Number(data.getHours()))
+uptMinu(Number(data.getMinutes()))
+uptSegu(Number(data.getSeconds()))
+
 setInterval(
     function update(){
-        fulldata.innerHTML = ''
-        let data = new Date()
-        let dia = data.getDate()
-        let sem = data.getDay()
-        let mes = data.getMonth()
-        let ano = data.getFullYear()
-
-        let hora = data.getHours()
-        let minu = data.getMinutes()
-        let segu = data.getSeconds()
-
-        uptSau(Number(hora))
-
-        uptDia(Number(dia))
-        uptSem(Number(sem))
-        uptMes(Number(mes))
-        uptAno(Number(ano))
-
-        uptHora(Number(hora))
-        uptMinu(Number(minu))
-        uptSegu(Number(segu))
-
+        data = new Date()
+        uptSegu(Number(data.getSeconds()))
     }, 20)
 
 function uptSau(h) {
@@ -40,6 +31,7 @@ function uptSau(h) {
 }
 
 function uptDia(d){
+    fulldata.innerHTML = ''
     let d1 = 0
     let d2 = 0
     if(d < 10) d1 = 0
@@ -55,6 +47,9 @@ function uptDia(d){
     for(let i=0; i <= 9; i++){
         if(d2 == i) fulldata.innerHTML += `${i}/`
     }
+
+    uptMes(data.getMonth())
+    uptAno(data.getFullYear())
 }
 
 function uptSem(s){
@@ -106,6 +101,8 @@ function uptAno(a){
 }
 
 function uptHora(h){
+    uptSau(h)
+
     let h1 = 0
     let h2 = 0
     let h1img = document.querySelector('img#hora1')
@@ -122,6 +119,11 @@ function uptHora(h){
     h2 = (h - (h1*10))
     for(let i=0; i < 10; i++){
         if(h2 == i) h2img.src = `number/${i}.png`
+    }
+
+    if(h == 0){
+        uptDia(data.getDate())
+        uptSem(data.getDay())
     }
 }
 
@@ -146,6 +148,8 @@ function uptMinu(m){
     for(let i=0; i < 10; i++){
         if(m2 == i) m2img.src = `number/${i}.png`
     }
+
+    if(m == 0) uptHora(data.getHours())
 }
 
 function uptSegu(s){
@@ -169,4 +173,6 @@ function uptSegu(s){
     for(let i=0; i < 10; i++){
         if(s2 == i) s2img.src = `number/mini/${i}.png`
     }
+
+    if(s == 0) uptMinu(Number(data.getMinutes()))
 }
