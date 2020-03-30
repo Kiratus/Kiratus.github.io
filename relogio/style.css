@@ -7,6 +7,7 @@ header{
     color: white;
 }
 section{
+    position: relative;
     background: #ffffff;
     border-radius: 5px;
     padding: 15px;
@@ -17,4 +18,16 @@ section{
 footer{
     color: white;
     font-style: italic;
+}
+section#analogico{
+    height: 400px;
+}
+div.analog{
+    position: relative;
+    margin: auto;
+}
+img.analog{
+    position: absolute;
+    top: 55px;
+    left: 82px;
 }
