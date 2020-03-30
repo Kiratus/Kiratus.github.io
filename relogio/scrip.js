@@ -18,6 +18,7 @@ setInterval(
     function update(){
         data = new Date()
         uptSegu(Number(data.getSeconds()))
+        uptAnalog(Number(data.getSeconds()), Number(data.getMinutes()), Number(data.getHours()))
     }, 20)
 
 function uptSau(h) {
@@ -105,7 +106,6 @@ function uptAno(a){
 }
 
 function uptHora(h){
-    //digial
     uptSau(h)
 
     let h1 = 0
@@ -126,12 +126,6 @@ function uptHora(h){
         if(h2 == i) h2img.src = `number/${i}.png`
     }
 
-    //analógico
-    let grau = 0
-    if(h <= 11) grau = h*30
-    else grau = (h-12)*30
-    pH.style.transform = `rotate(${grau}deg)`
-
     if(h == 0){
         uptDia(data.getDate())
         uptSem(data.getDay())
@@ -140,7 +134,6 @@ function uptHora(h){
 }
 
 function uptMinu(m){
-    //digital
     let m1 = 0
     let m2 = 0
     let m1img = document.querySelector('img#minu1')
@@ -162,15 +155,10 @@ function uptMinu(m){
         if(m2 == i) m2img.src = `number/${i}.png`
     }
 
-    //analógico
-    let grau = m*6
-    pM.style.transform = `rotate(${grau}deg)`
-
     if(m == 0) uptHora(data.getHours())
 }
 
 function uptSegu(s){
-    //digital
     let s1 = 0
     let s2 = 0
     let s1img = document.querySelector('img#sec1')
@@ -192,9 +180,16 @@ function uptSegu(s){
         if(s2 == i) s2img.src = `number/mini/${i}.png`
     }
 
-    //analógico
-    let grau = s*6
-    pS.style.transform = `rotate(${grau}deg)`
-
     if(s == 0) uptMinu(Number(data.getMinutes()))
+}
+
+function uptAnalog(S, M, H){
+    let minus12 = H <= 11? 0 : 12
+    let grauH = (H-minus12)*30 + M*0.5 + S*0.0083
+    let grauS = S*6
+    let grauM = M*6 + S*0.1
+    
+    pS.style.transform = `rotate(${grauS}deg)`
+    pM.style.transform = `rotate(${grauM}deg)`
+    pH.style.transform = `rotate(${grauH}deg)`
 }
