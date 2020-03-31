@@ -72,7 +72,8 @@ function uptSem(s){
 }
 
 function uptMes(m){
-    fulldata.innerHTML += `${m}/`
+    if(m < 8) fulldata.innerHTML += `0`
+    fulldata.innerHTML += `${m+1}/`
 }
 
 function uptAno(a){
