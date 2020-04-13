@@ -16,6 +16,10 @@ section{
     position: relative;
 }
 
+div#status{
+    text-align: left;
+}
+
 footer{
     text-align: center;
     color: white;
