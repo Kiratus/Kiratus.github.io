@@ -1,6 +1,9 @@
 class CalcController {
 
     constructor(){
+
+        this._audio = new Audio('click.mp3');
+        this._audioOn = false;
         this._lastOperation = '';
         this._lastNumber = '';
         this._operation = [];
@@ -14,6 +17,31 @@ class CalcController {
         this.initKeyboard();
     }
 
+    copyToClipboard(){
+        
+        let input = document.createElement('input');
+
+        input.value = this.displayCalc;
+        document.body.appendChild(input);
+        input.select();
+
+        document.execCommand("Copy");
+
+        input.remove();
+    }
+
+    pasteFromClipboard(){
+
+        document.addEventListener('paste', e => {
+
+            let text = parseFloat(e.clipboardData.getData('Text'));
+
+            if(!isNaN(text)) this.displayCalc = text;
+
+        })
+
+    }
+
     initialize(){
         this.setDisplayDateTime();
 
@@ -24,11 +52,25 @@ class CalcController {
         }, 10000);
 
         this.setLastNumberToDisplay();
+        this.pasteFromClipboard();
+
+        document.querySelectorAll(".btn-ac").forEach(btn => {
+            btn.addEventListener('dblclick', e => {
+                this._audioOn = !this._audioOn;
+            });
+        });
+    }
+
+    playAudio(){
+        if(this._audioOn){
+            this._audio.currentTime = 0;
+            this._audio.play();
+        }
     }
 
     initKeyboard(){
         document.addEventListener('keyup', e => {
-
+            this.playAudio();
             switch (e.key){
                 case 'Escape':
                     this.clearAll();
@@ -65,6 +107,10 @@ class CalcController {
                 case '8':
                 case '9':
                     this.addOperation(e.key);
+                    break;
+
+                case 'c':
+                    if (e.ctrlKey) this.copyToClipboard();
                     break;
             }
 
@@ -218,7 +264,7 @@ class CalcController {
     addDot(){
         let lastOperator = this.getLastOperation();
 
-        lastOperator = lastOperator.toString();
+        if(lastOperator) lastOperator = lastOperator.toString();
 
         if(typeof lastOperator === 'string' && lastOperator.split('').indexOf('.') > -1) return;
 
@@ -231,6 +277,8 @@ class CalcController {
     }
 
     execBtn(value){
+        this.playAudio();
+
         switch (value){
             case 'ac':
                 this.clearAll();
@@ -336,6 +384,8 @@ class CalcController {
     }
 
     set displayCalc(value){
+        if(value.toString().length > 10) value = "TOO LONG";
+        
         this._displayCalcEl.innerHTML = value;
     }
 
