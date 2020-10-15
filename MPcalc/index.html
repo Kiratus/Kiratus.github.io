@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Mercado Pago</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Calculadora de taxa Mercado Pago</h1>
+    </header>
+    <h3>VALOR A RECEBER</h3>
+    <input type="number" name="valor" id="valor">
+    <h3>PRAZO PARA RECEBER</h3>
+    <p>
+        <input type="radio" id="hora" name="prazo" value="na hora" checked>
+        <label for="na hora">na hora</label>
+        <input type="radio" id="dia14" name="prazo" value="14 dias">
+        <label for="14 dias">14 dias</label>
+        <input type="radio" id="dia30" name="prazo" value="30 dias">
+        <label for="30 dias">30 dias</label>
+    </p>
+    <input type="button" value="CALCULAR" onclick="calctaxas()">
+</br></br>
+    <table>
+        <tr>
+            <th>PARCELAS</th>
+            <th>TAXA</th>
+            <th>VALOR FINAL</th>
+        </tr>
+        <tr>
+            <td>Débito</td>
+            <td id="tx0"></td>
+            <td id="tx0f"></td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td id="tx1"></td>
+            <td id="tx1f"></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td id="tx2"></td>
+            <td id="tx2f"></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td id="tx3"></td>
+            <td id="tx3f"></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td id="tx4"></td>
+            <td id="tx4f"></td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td id="tx5"></td>
+            <td id="tx5f"></td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td id="tx6"></td>
+            <td id="tx6f"></td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td id="tx7"></td>
+            <td id="tx7f"></td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td id="tx8"></td>
+            <td id="tx8f"></td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td id="tx9"></td>
+            <td id="tx9f"></td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td id="tx10"></td>
+            <td id="tx10f"></td>
+        </tr>
+        <tr>
+            <td>11</td>
+            <td id="tx11"></td>
+            <td id="tx11f"></td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td id="tx12"></td>
+            <td id="tx12f"></td>
+        </tr>
+    </table>
+    <footer>Emanoel Rodrigues - 2020</footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
