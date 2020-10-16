@@ -1,49 +1,30 @@
 function calctaxas()
 {
     let inputValor = document.querySelector("input#valor").value;
-    let taxa = 0;
     let fixo = 0;
+    let juros = [4.09, 5.41, 6.70, 7.96, 9.20, 10.41, 11.61, 12.78, 13.92, 15.05, 16.14];
 
-    if(document.querySelector("input#hora").checked) fixo = 5.31;
-    else if(document.querySelector("input#dia14").checked) fixo = 4.36;
-    else fixo = 3.6;
+    preenche(0, inputValor, 1.99, 0);
 
-    for(let i = 0; i <= 12; i++)
+    if(document.querySelector("input#hora").checked)
     {
-        switch(i)
-        {
-            case 0: taxa = 0;
-            break;
-            case 1: taxa = 0;
-            break;
-            case 2: taxa = 4.09;
-            break;
-            case 3: taxa = 5.41;
-            break;
-            case 4: taxa = 6.7;
-            break;
-            case 5: taxa = 7.96;
-            break;
-            case 6: taxa = 9.2;
-            break;
-            case 7: taxa = 10.41;
-            break;
-            case 8: taxa = 11.61;
-            break;
-            case 9: taxa = 12.78;
-            break;
-            case 10: taxa = 13.92;
-            break;
-            case 11: taxa = 15.05;
-            break;
-            case 12: taxa = 16.15;
-            break;
-        }
-
-        if(i == 0) preenche(i, inputValor, 1.99, 0);
-        else preenche (i, inputValor, fixo, taxa);
+        fixo = 5.31;
+        preenche(1, inputValor, 4.74, 0);
     }
+    else if(document.querySelector("input#dia14").checked)
+    {
+        fixo = 4.36;
+        preenche(1, inputValor, 3.79, 0);
+    }
+    else
+    {
+        fixo = 3.60;
+        preenche(1, inputValor, 3.03, 0);
+    }
+
+    for(let i = 2; i <= 12; i++) preenche(i, inputValor, fixo, juros[i-2]);
 }
+
 
 function preenche(i, inputValor, fixo, taxa)
 {
