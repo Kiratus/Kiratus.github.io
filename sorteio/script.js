@@ -6,7 +6,6 @@ let nomes = ["Allan", "Wesley", "César Junior", "Bianca", "Bruna", "Daniel",
 function sorteia()
 {
     let sorteados = [];
-    let quantSorteado = 0;
     let campo = [];
     let msg = document.querySelector("div#sorteando");
     msg.innerHTML = "SORTEANDO...";
@@ -14,27 +13,30 @@ function sorteia()
     for(let i = 0; i < 24; i++) campo[i] = document.querySelector(`td#c${i}`);
     for(let i = 0; i < 24; i++) campo[i].innerHTML = "";
 
-    let repeat = setInterval(function()
+    while (sorteados.length < 24)
     {
         let sorteado = Math.floor(Math.random() * 24);
+        let jaFoi = false;
+        
+        for(let i = 0; i < 24; i++)
+            if(sorteado == sorteados[i]) jaFoi = true;
 
-        for(let i = 0; i < sorteados.length; i++)
-        {
-            if(sorteado == sorteados[i])
-            {
-                console.log("REPETIDO: ", sorteado, " ", sorteados[i]);
-                return;
-            }
-        }
+        if(jaFoi) continue;
 
         sorteados.push(sorteado);
-        campo[quantSorteado].innerHTML = nomes[sorteado];
+    }
 
-        quantSorteado++;
+    let preenchidos = 0;
 
-        if(sorteados.length >= 24){
-            clearInterval(repeat);
+    let preenche = setInterval(function()
+    {
+        campo[preenchidos].innerHTML = nomes[sorteados[preenchidos]];
+
+        preenchidos++
+
+        if(preenchidos >= 24){
+            clearInterval(preenche);
             msg.innerHTML = "";
         }
-    }, 50);
+    }, 1000);
 }
