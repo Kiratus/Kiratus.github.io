@@ -68,7 +68,10 @@ function preenche(i, inputValor, fixo, taxa)
     let taxaFinal = valorFinal - inputValor;
     let textoValorFinal = document.querySelector(`td#tx${i}f`);
     let textoTaxaFinal = document.querySelector(`td#tx${i}`);
+    let textoParcela = document.querySelector(`td#tx${i}p`);
     
     textoValorFinal.innerHTML = `R$${parseFloat(valorFinal.toFixed(2))}`;
     textoTaxaFinal.innerHTML = `R$${parseFloat(taxaFinal.toFixed(2))}`;
+    if(i != 0) textoParcela.innerHTML = `R$${parseFloat(valorFinal/i).toFixed(2)}`;
+    else textoParcela.innerHTML = textoValorFinal.innerHTML;
 }
