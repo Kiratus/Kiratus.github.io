@@ -1,0 +1,42 @@
+body{
+    background-color: #4b4b4d;
+    text-align: center;
+}
+
+h4{
+    color: white;
+}
+
+input#valor{
+    width: 75px;
+}
+
+img.logo{
+    width: 75px;
+    height: 34px;
+}
+
+table{
+    margin-left: auto;
+    margin-right: auto;
+    border-style: solid;
+    border-color: #00ff00;
+    border-width: 5px;
+    color: #baf9ba;
+}
+
+td{
+    width: 40%;
+    border-style: solid;
+    border-color: white;
+    border-width: 2px;
+}
+th{
+    border-style: solid;
+    border-color: white;
+    border-width: 2px; 
+}
+
+footer{
+    color: white;
+}
