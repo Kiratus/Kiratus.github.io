@@ -3,10 +3,6 @@ body{
     text-align: center;
 }
 
-h4{
-    color: white;
-}
-
 input#valor{
     width: 75px;
 }
@@ -35,6 +31,10 @@ th{
     border-style: solid;
     border-color: white;
     border-width: 2px; 
+}
+
+div.error{
+    color: rgb(253, 193, 193);
 }
 
 footer{

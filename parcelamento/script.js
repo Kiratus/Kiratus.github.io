@@ -18,9 +18,9 @@ function calcula()
 {
     let valor = document.querySelector("input#valor").value;
 
-    if(isNaN(valor))
+    if(valor < 0)
     {
-        alert("Digite apenas números!");
+        alert("Não existem produtos com valor negativo. Pare de tentar quebrar meu site!");
         return;
     }
 
@@ -34,13 +34,14 @@ function calcula()
     {
         let vTotal = (100*valor)/(100-juros[i-2]);
         campoTotal[i].innerHTML = "R$" + parseFloat(vTotal).toFixed(2);
-        campoParcela[i].innerHTML = `${i}x R$${parseFloat(vTotal/i).toFixed(2)}`
+        campoParcela[i].innerHTML = `${i}x⠀R$${parseFloat(vTotal/i).toFixed(2)}`
 
         if((vTotal)/i < 5)
         {
-            campoTotal[i].innerHTML = "N/D";
-            campoParcela[i].innerHTML = "N/D";
-            document.getElementById("foot").innerHTML = "A parcela deve ser no mínimo R$5,00<br>&copy; - Ista Imports 2020"
+            campoTotal[i].innerHTML = "n parcela";
+            campoParcela[i].innerHTML = " n parcela";
+            document.getElementById("parcelaLow").innerHTML = "O valor da parcela não pode ser inferior a R$5,00";
         }
+        else document.getElementById("parcelaLow").innerHTML = "";
     }
 }
