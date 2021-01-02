@@ -4,6 +4,7 @@ const vm = new Vue({
         entrada: "",
         parc: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         total: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        classeLinha: ['naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida'],
         hideError: true
     },
     watch: {
@@ -14,7 +15,8 @@ const vm = new Vue({
             {
                 this.parc = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 this.total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                this.hideError = true
+                this.hideError = true,
+                this.classeLinha = ['naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida']
             }
         }
     }
@@ -56,5 +58,8 @@ function calcula()
             vm.hideError = false;
         }
         else vm.hideError = true;
+
+        if(vm.total[i-2] == ' //') vm.classeLinha[i-2] = 'naoParcela';
+        else vm.classeLinha[i-2] = 'preenchida';
     }
 }

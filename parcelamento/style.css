@@ -12,14 +12,28 @@ input#valor{
     height: 34px;
 }
 
-
 table{
     margin-left: auto;
     margin-right: auto;
     border-style: solid;
     border-color: #00ff00;
     border-width: 5px;
+}
+
+.topo{
+    color: #fff;
+}
+
+.preenchida{
     color: #baf9ba;
+}
+
+.naoPreenchida{
+    color: #fff;
+}
+
+.naoParcela{
+    color: rgb(255, 142, 142);
 }
 
 td{
