@@ -7,6 +7,11 @@ input#valor{
     width: 75px;
 }
 
+img.logo{
+    width: 75px;
+    height: 34px;
+}
+
 table{
     margin-left: auto;
     margin-right: auto;
@@ -28,7 +33,7 @@ th{
     border-width: 2px; 
 }
 
-.error{
+div.error{
     color: rgb(253, 193, 193);
 }
 
