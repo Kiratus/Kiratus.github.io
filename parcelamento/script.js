@@ -2,8 +2,8 @@ const vm = new Vue({
     el: "#app",
     data: {
         entrada: "",
-        parc: [0, 0, 0, 0, 0, 0, 0, 0., 0, 0, 0],
-        total: [0, 0, 0, 0, 0, 0, 0, 0., 0, 0, 0],
+        parc: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        total: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         hideError: true
     },
     watch: {
@@ -12,8 +12,8 @@ const vm = new Vue({
             calcula();
             if(this.entrada == "")
             {
-                this.parc = [0, 0, 0, 0, 0, 0, 0, 0., 0, 0, 0],
-                this.total = [0, 0, 0, 0, 0, 0, 0, 0., 0, 0, 0],
+                this.parc = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                this.total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 this.hideError = true
             }
         }
