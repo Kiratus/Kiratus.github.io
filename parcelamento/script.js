@@ -2,23 +2,21 @@ const vm = new Vue({
     el: "#app",
     data: {
         entrada: "",
-        parc: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        total: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        classeLinha: ['naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida'],
+        parc: [],
+        total: [],
+        classeLinha: [],
         hideError: true
     },
     watch: {
-        entrada()
+        entrada(novo, velho)
         {
-            calcula();
+            if(velho.length == 0 && novo.length >= 1) this.entrada = 'R$' + this.entrada;
+            else if (this.entrada[0] != 'R' || this.entrada[1] != '$') this.entrada = "";
+            else if (novo.length == 2) this.entrada = "";
 
-            if(this.entrada == "")
-            {
-                this.parc = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                this.total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                this.hideError = true,
-                this.classeLinha = ['naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida']
-            }
+            calcula(novo.replace('R$', ''));
+
+            if(this.entrada == "") resetaDados();
 
             else {
                 this.classeLinha[0] = 'preenchida';
@@ -28,7 +26,8 @@ const vm = new Vue({
     }
 });
 
-let juros = [
+let juros =
+[
     9,      //2x
     10,     //3x
     11.3,   //4x
@@ -42,35 +41,52 @@ let juros = [
     21      //12x
 ];
 
-function calcula()
+function calcula(value)
 {
-    if(vm.entrada < 0)
+    if(value.length == 0) return;
+
+    const numberEntrada = parseFloat(value);
+    if(numberEntrada == 0) return;
+
+    if(numberEntrada < 0)
     {
         alert("Não existem produtos com valor negativo. Pare de tentar quebrar meu site!");
         return;
     }
 
-    const numberEntrada = parseFloat(vm.entrada);
+    if(isNaN(numberEntrada))
+    {
+        alert("Utilize apenas números!");
+        return;
+    }
 
     vm.total[0] = numberEntrada > 100 ? (numberEntrada + 5).toFixed(2) : numberEntrada.toFixed(2);
     vm.total[1] = numberEntrada > 100 ? (numberEntrada + 10).toFixed(2) : (numberEntrada + 3).toFixed(2);
 
     for(let i = 2; i <= 12; i++)
     {
-        let vTotal = (100*vm.entrada)/(100-juros[i-2]);
+        let vTotal = (100*numberEntrada)/(100-juros[i-2]);
 
         vm.parc[i-2] = parseFloat(vTotal/i).toFixed(2);
         vm.total[i] = parseFloat(vTotal).toFixed(2);
 
         if((vTotal)/i < 5)
         {
-            vm.parc[i-2] = ' //'
+            vm.parc[i-2] = ' //';
             vm.total[i] = ' //';
             vm.hideError = false;
         }
         else vm.hideError = true;
 
-        if(vm.total[i-2] == ' //') vm.classeLinha[i] = 'naoParcela';
+        if(vm.total[i] == ' //') vm.classeLinha[i] = 'naoParcela';
         else vm.classeLinha[i] = 'preenchida';
     }
+}
+
+function resetaDados()
+{
+    vm.parc = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    vm.total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    vm.hideError = true;
+    vm.classeLinha = ['naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida', 'naoPreenchida'];
 }

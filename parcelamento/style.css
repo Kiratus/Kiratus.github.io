@@ -5,6 +5,7 @@ body{
 
 input#valor{
     width: 125px;
+    text-align: right;
 }
 
 .logo{

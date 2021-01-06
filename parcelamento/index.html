@@ -8,11 +8,11 @@
     <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
     <script src="https://unpkg.com/vue"></script>
 </head>
-<body>
+<body onload="resetaDados()">
     <span id="app">
         <img src="assets/logoIsta.png" alt="Logo Ista Imports" class="logo">
         <p>
-            <input type="number" name="valor" id="valor" v-model="entrada" placeholder="valor">
+            <input type="text" name="valor" id="valor" v-model="entrada" placeholder="valor">
         </p>
 
         <table>
