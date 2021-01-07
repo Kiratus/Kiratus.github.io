@@ -3,9 +3,16 @@ body{
     text-align: center;
 }
 
-input#valor{
-    width: 125px;
+#valor{
+    width: 125px; 
+}
+
+.valorPreenchido{
     text-align: right;
+}
+
+.valorNaoPreenchido{
+    text-align: center;
 }
 
 .logo{
