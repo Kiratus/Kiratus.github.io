@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de link WhatsApp</title>
+    <style>
+        body {
+            background-color: #d1f6ff;
+            text-align: center;
+        }
+        h1 {
+            color: #08319e;
+            font-family: 'Roboto', sans-serif;
+        }
+        h2 {
+            color: #085c90;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        footer {
+            color: #085c90;
+        }
+
+        .form__input {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            font-size: 1.2rem;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            border-radius: 0.2rem;
+            background-color: rgb(255, 255, 255);
+            border: none;
+            width: 50%;
+            display: block;
+            border-bottom: 0.3rem solid transparent;
+            transition: all 0.3s;
+            }
+
+        /* CSS */
+        .button-3 {
+        appearance: none;
+        background-color: #2ea44f;
+        border: 1px solid rgba(27, 31, 35, .15);
+        border-radius: 6px;
+        box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        padding: 6px 16px;
+        position: relative;
+        text-align: center;
+        text-decoration: none;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: middle;
+        white-space: nowrap;
+        }
+
+        .button-3:focus:not(:focus-visible):not(.focus-visible) {
+        box-shadow: none;
+        outline: none;
+        }
+
+        .button-3:hover {
+        background-color: #2c974b;
+        }
+
+        .button-3:focus {
+        box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+        outline: none;
+        }
+
+        .button-3:disabled {
+        background-color: #94d3a2;
+        border-color: rgba(27, 31, 35, .1);
+        color: rgba(255, 255, 255, .8);
+        cursor: default;
+        }
+
+        .button-3:active {
+        background-color: #298e46;
+        box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+        }
+    </style>
+</head>
+<body>
+    <h1>GERADOR DE LINK WHATSAPP</h1>
+    <h2>PENSE COM A CUCA</h2>
+    <p>
+        <input type="number" id="tel" placeholder="Telefone com DDD" class="form__input">
+        <input type="text" id="msg" placeholder="Mensagem" class="form__input">
+        <button onclick="gerar()" class="button-3" role="button">GERAR</button>
+    </p>
+    <p>
+        <input type="text" placeholder="resultado" id="result" class="form__input">
+        <button onclick="copiar()" class="button-3" role="button">COPIAR</button>
+    </p>
+    
+    <footer>@pensecomacuca</footer>
+</body>
+
+<script>
+    function gerar(){
+        let tel = document.getElementById("tel").value
+        let msg = document.getElementById("msg").value
+
+        console.log(tel.length)
+        if (tel.length != 11) {
+            alert("Ops, revise o número e tente novamente. Exemplo de número valido: 85988776655")
+            //return
+        }
+
+        msg = msg.replaceAll("%", "%25")
+        msg = msg.replaceAll("$", "%24")
+        msg = msg.replaceAll("&", "%26")
+        msg = msg.replaceAll("+", "%2B")
+        msg = msg.replaceAll(",", "%2C")
+        msg = msg.replaceAll(".", "%2C")
+        msg = msg.replaceAll("/", "%2F")
+        msg = msg.replaceAll(":", "%3A")
+        msg = msg.replaceAll(";", "%3B")
+        msg = msg.replaceAll("=", "%3D")
+        msg = msg.replaceAll("?", "%3F")
+        msg = msg.replaceAll("@", "%40")
+        msg = msg.replaceAll(" ", "%20")
+        msg = msg.replaceAll('"', "%22")
+        msg = msg.replaceAll("<", "%3C")
+        msg = msg.replaceAll(">", "%3E")
+        msg = msg.replaceAll("#", "%23")
+        msg = msg.replaceAll("{", "%7B")
+        msg = msg.replaceAll("}", "%7D")
+        msg = msg.replaceAll("|", "%7C")
+        msg = msg.replaceAll('\\', "%5C")
+        msg = msg.replaceAll("^", "%5E")
+        msg = msg.replaceAll("~", "%7E")
+        msg = msg.replaceAll("[", "%5B")
+        msg = msg.replaceAll("]", "%5D")
+        msg = msg.replaceAll("'", "%60")
+
+        let ext = `https://api.whatsapp.com/send?phone=55${tel}&text=${msg}`
+
+        document.getElementById("result").value = ext
+    }
+
+    function copiar() {
+        let copyText = document.getElementById("result")
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+        /* Copy the text inside the text field */
+        //navigator.clipboard.writeText(copyText.value);
+
+        document.execCommand('copy')
+
+        alert("Copiado para a área de transferência!")
+    }
+</script>
+</html>
