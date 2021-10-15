@@ -91,15 +91,18 @@
         box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
         }
 
-        footer.aviso {
+        .aviso {
             color: #ff0000;
         }
     </style>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
+    <img src="logo.png">
     <span id="app">
         <h1>GERADOR DE LINK WHATSAPP</h1>
         <h2>PENSE COM A CUCA</h2>
+        <p class="aviso">{{aviso}}</p>
         <p>
             <input v-model="numero" type="text" id="tel" placeholder="Telefone com DDD" class="form__input">
             <input type="text" id="msg" placeholder="Mensagem" class="form__input">
@@ -109,7 +112,6 @@
             <input type="text" placeholder="resultado" id="result" class="form__input">
             <button onclick="copiar()" class="button-3" role="button">COPIAR</button>
         </p>
-        <footer class="aviso">{{aviso}}</footer>
     </span>
     <footer>@pensecomacuca</footer>
 </body>
@@ -126,7 +128,11 @@
             numero(novo, velho) {
                 //primeiro input
                 if (novo.length == 1 && velho.length == 0) {
-                    this.numero = "(" + this.numero //)
+                    if(checaSeEhNumero(novo, 0)){
+                        this.numero = ""
+                        this.aviso = "Digite apenas números!"
+                    }
+                    else this.numero = "(" + this.numero //)
                 }
                 else if(novo.length == 3 && velho.length == 2) {
                     this.numero = this.numero + ") "
@@ -171,6 +177,10 @@
         let msg = document.getElementById("msg").value
         
         tel = tratarTel(tel)
+        /*if(tel/2 == NaN) {
+            vue.aviso = "Algo deu errado. Revise o número de telefone e tente novamente."
+            return
+        }*/
 
         if (tel.length != 11 && tel.length != 10) {
             vue.aviso = "Ops, revise o número e tente novamente. Exemplo de número valido: 85988776655"
