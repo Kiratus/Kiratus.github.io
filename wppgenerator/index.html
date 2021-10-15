@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador de link WhatsApp</title>
+    <script src="https://unpkg.com/vue"></script>
     <style>
         body {
             background-color: #d1f6ff;
@@ -89,61 +90,95 @@
         background-color: #298e46;
         box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
         }
+
+        footer.aviso {
+            color: #ff0000;
+        }
     </style>
 </head>
 <body>
-    <h1>GERADOR DE LINK WHATSAPP</h1>
-    <h2>PENSE COM A CUCA</h2>
-    <p>
-        <input type="number" id="tel" placeholder="Telefone com DDD" class="form__input">
-        <input type="text" id="msg" placeholder="Mensagem" class="form__input">
-        <button onclick="gerar()" class="button-3" role="button">GERAR</button>
-    </p>
-    <p>
-        <input type="text" placeholder="resultado" id="result" class="form__input">
-        <button onclick="copiar()" class="button-3" role="button">COPIAR</button>
-    </p>
-    
+    <span id="app">
+        <h1>GERADOR DE LINK WHATSAPP</h1>
+        <h2>PENSE COM A CUCA</h2>
+        <p>
+            <input v-model="numero" type="text" id="tel" placeholder="Telefone com DDD" class="form__input">
+            <input type="text" id="msg" placeholder="Mensagem" class="form__input">
+            <button onclick="gerar()" class="button-3" role="button">GERAR</button>
+        </p>
+        <p v-show="resultado">
+            <input type="text" placeholder="resultado" id="result" class="form__input">
+            <button onclick="copiar()" class="button-3" role="button">COPIAR</button>
+        </p>
+        <footer class="aviso">{{aviso}}</footer>
+    </span>
     <footer>@pensecomacuca</footer>
 </body>
 
 <script>
-    function gerar(){
-        let tel = document.getElementById("tel").value
-        let msg = document.getElementById("msg").value
+    let vue = new Vue({
+        el: '#app',
+        data: {
+            numero: "",
+            resultado: false,
+            aviso: ""
+        },
+        watch: {
+            numero(novo, velho) {
+                //primeiro input
+                if (novo.length == 1 && velho.length == 0) {
+                    this.numero = "(" + this.numero //)
+                }
+                else if(novo.length == 3 && velho.length == 2) {
+                    this.numero = this.numero + ") "
+                }
+                else if(novo.length == 10 && velho.length == 9) {
+                    this.numero = this.numero + "-"
+                }
 
-        console.log(tel.length)
-        if (tel.length != 11) {
-            alert("Ops, revise o número e tente novamente. Exemplo de número valido: 85988776655")
-            //return
+                if(this.numero.length != 0 && this.numero.length != 1 && this.numero.length != 4 && this.numero.length != 5 && this.numero.length != 11) {
+                    if(checaSeEhNumero(this.numero, this.numero.length-1)) {
+                        this.aviso = "Digite apenas números!"
+                        this.numero = velho
+                    }
+                }
+
+                else if(this.numero.length == 5){
+                    if(checaSeEhNumero(this.numero, 2))
+                    {
+                        this.aviso = "Digite apenas números!"
+                        this.numero = velho
+                    }
+                }
+
+                else if(this.numero.length == 11){
+                    if(checaSeEhNumero(this.numero, 9))
+                    {
+                        this.aviso = "Digite apenas números!"
+                        this.numero = velho
+                    }
+                }
+
+                if(novo.length > 15) {
+                    this.numero = velho
+                }
+            }
+        }
+    })
+
+    function gerar(){
+        vue.aviso = ""
+        let tel = vue.numero
+        let msg = document.getElementById("msg").value
+        
+        tel = tratarTel(tel)
+
+        if (tel.length != 11 && tel.length != 10) {
+            vue.aviso = "Ops, revise o número e tente novamente. Exemplo de número valido: 85988776655"
+            return
         }
 
-        msg = msg.replaceAll("%", "%25")
-        msg = msg.replaceAll("$", "%24")
-        msg = msg.replaceAll("&", "%26")
-        msg = msg.replaceAll("+", "%2B")
-        msg = msg.replaceAll(",", "%2C")
-        msg = msg.replaceAll(".", "%2C")
-        msg = msg.replaceAll("/", "%2F")
-        msg = msg.replaceAll(":", "%3A")
-        msg = msg.replaceAll(";", "%3B")
-        msg = msg.replaceAll("=", "%3D")
-        msg = msg.replaceAll("?", "%3F")
-        msg = msg.replaceAll("@", "%40")
-        msg = msg.replaceAll(" ", "%20")
-        msg = msg.replaceAll('"', "%22")
-        msg = msg.replaceAll("<", "%3C")
-        msg = msg.replaceAll(">", "%3E")
-        msg = msg.replaceAll("#", "%23")
-        msg = msg.replaceAll("{", "%7B")
-        msg = msg.replaceAll("}", "%7D")
-        msg = msg.replaceAll("|", "%7C")
-        msg = msg.replaceAll('\\', "%5C")
-        msg = msg.replaceAll("^", "%5E")
-        msg = msg.replaceAll("~", "%7E")
-        msg = msg.replaceAll("[", "%5B")
-        msg = msg.replaceAll("]", "%5D")
-        msg = msg.replaceAll("'", "%60")
+        vue.resultado = true
+        msg = convertToLink(msg)
 
         let ext = `https://api.whatsapp.com/send?phone=55${tel}&text=${msg}`
 
@@ -160,7 +195,64 @@
 
         document.execCommand('copy')
 
-        alert("Copiado para a área de transferência!")
+        vue.aviso = "Copiado para a área de transferência!"
     }
+
+    function convertToLink(temp) {
+        temp = temp.replaceAll("%", "%25")
+        temp = temp.replaceAll("$", "%24")
+        temp = temp.replaceAll("&", "%26")
+        temp = temp.replaceAll("+", "%2B")
+        temp = temp.replaceAll(",", "%2C")
+        temp = temp.replaceAll(".", "%2C")
+        temp = temp.replaceAll("/", "%2F")
+        temp = temp.replaceAll(":", "%3A")
+        temp = temp.replaceAll(";", "%3B")
+        temp = temp.replaceAll("=", "%3D")
+        temp = temp.replaceAll("?", "%3F")
+        temp = temp.replaceAll("@", "%40")
+        temp = temp.replaceAll(" ", "%20")
+        temp = temp.replaceAll('"', "%22")
+        temp = temp.replaceAll("<", "%3C")
+        temp = temp.replaceAll(">", "%3E")
+        temp = temp.replaceAll("#", "%23")
+        temp = temp.replaceAll("{", "%7B")
+        temp = temp.replaceAll("}", "%7D")
+        temp = temp.replaceAll("|", "%7C")
+        temp = temp.replaceAll('\\', "%5C")
+        temp = temp.replaceAll("^", "%5E")
+        temp = temp.replaceAll("~", "%7E")
+        temp = temp.replaceAll("[", "%5B")
+        temp = temp.replaceAll("]", "%5D")
+        temp = temp.replaceAll("'", "%60")
+
+        return temp
+    }
+
+    function checaSeEhNumero(numero, pos) {
+        if(
+            numero[pos] != "0" &&
+            numero[pos] != "1" &&
+            numero[pos] != "2" &&
+            numero[pos] != "3" &&
+            numero[pos] != "4" &&
+            numero[pos] != "5" &&
+            numero[pos] != "6" &&
+            numero[pos] != "7" &&
+            numero[pos] != "8" &&
+            numero[pos] != "9"
+        ) return true
+        else return false
+    }
+
+    function tratarTel(tel) {
+        tel = tel.replaceAll(" ", "")
+        tel = tel.replaceAll("(", "")
+        tel = tel.replaceAll(")", "")
+        tel = tel.replaceAll("-", "")
+
+        return tel
+    }
+
 </script>
 </html>
