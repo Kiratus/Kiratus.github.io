@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pode?</title>
+</head>
+<body style="background-color: black">
+    <h1 style="color: white" id="result">
+        calculando...
+    </h1>
+    <img style = "width: 360px" id="imagem"src="">
+</body>
+<script>
+    let r = document.getElementById("result");
+    let i = document.getElementById("imagem");
+    let permitido = false;
+    let d = new Date();
+  
+    if(d.getDay() == 0) permitido = true; //domingo
+
+    else if (d.getDay() == 6 &&
+    !(d.getHours() >= 7 && d.getHours() < 12))
+        permitido = true;
+
+    else
+        if((d.getHours() < 7) ||
+        d.getHours() == 13 ||
+        d.getHours() >= 17)
+        permitido = true;
+  
+    if (permitido)
+    {
+        r.innerHTML = "SIM";
+        i.src = "https://i.imgur.com/33GQ9mx.jpg";
+    }
+    else
+    {
+        r.innerHTML = "NÃO";
+        i.src = "https://i.imgur.com/V86WOZq.jpg";
+    }
+</script>
+</html>
