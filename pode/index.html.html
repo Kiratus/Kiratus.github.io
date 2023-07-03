@@ -16,6 +16,8 @@
     let i = document.getElementById("imagem");
     let permitido = false;
     let d = new Date();
+
+    if(feriado(d.getDate(), d.getMonth())) permitio = true; // feriado
   
     if(d.getDay() == 0) permitido = true; //domingo
 
@@ -38,6 +40,25 @@
     {
         r.innerHTML = "NÃO";
         i.src = "https://i.imgur.com/V86WOZq.jpg";
+    }
+
+    function feriado(dia, mes)
+    {
+            if(dia == 1 && mes == 0)    return true;
+        else if(dia == 19 && mes == 2)  return true;
+        else if(dia == 25 && mes == 2)  return true;
+        else if(dia == 7 && mes == 3)   return true;
+        else if(dia == 13 && mes == 3)  return true;
+        else if(dia == 21 && mes == 3)  return true;
+        else if(dia == 1 && mes == 4)   return true;
+        else if(dia == 8 && mes == 5)   return true;
+        else if(dia == 15 && mes == 7)  return true;
+        else if(dia == 7 && mes == 8)   return true;
+        else if(dia == 12 && mes == 9)  return true;
+        else if(dia == 2 && mes == 10)  return true;
+        else if(dia == 15 && mes == 10) return true;
+        else if(dia == 25 && mes == 11) return true;
+        else return false; 
     }
 </script>
 </html>
