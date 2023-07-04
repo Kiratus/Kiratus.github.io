@@ -27,19 +27,19 @@
 
     else
         if((d.getHours() < 7) ||
-        d.getHours() == 13 ||
+        d.getHours() == 12 ||
         d.getHours() >= 17)
         permitido = true;
   
     if (permitido)
     {
         r.innerHTML = "SIM";
-        i.src = "https://i.imgur.com/ye3xkEs.png"; //"https://i.imgur.com/33GQ9mx.jpg";
+        i.src = "https://i.imgur.com/HtIGpaY.jpg"; //"https://i.imgur.com/33GQ9mx.jpg";
     }
     else
     {
         r.innerHTML = "NÃO";
-        i.src = "https://i.imgur.com/ye3xkEs.png"; //"https://i.imgur.com/V86WOZq.jpg";
+        i.src = "https://i.imgur.com/jw8E8G1.jpg"; //"https://i.imgur.com/V86WOZq.jpg";
     }
 
     function feriado(dia, mes)
