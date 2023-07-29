@@ -22,8 +22,8 @@ function updateClock()
     let dia = data.getDate()
     let mes = data.getMonth()
 
-    holyday = isHolyday(dia, mes)
-    saturday = diaS == 5? true : false
+    holyday = isHolyday(diaS, dia, mes)
+    saturday = diaS == 6? true : false
     entaoPode(horas, minutos)
     uptAnalog(minutos, horas)
 }
@@ -37,12 +37,12 @@ function uptAnalog(M, H){
 
 function entaoPode(horas, minutos)
 {
+    updateDisk(horas)
     //domingo ou feriado
     if(holyday)
     {
         //pode
         resp.innerHTML = "SIM";
-        back.src = "images/bgHd.png";
         lulu.src = "images/baseYes.png";
         pointer.src = "images/pointerYes.png";
     }
@@ -57,7 +57,6 @@ function entaoPode(horas, minutos)
             {
                 // não pode
                 resp.innerHTML = "NÃO";
-                back.src = "images/bgAm.png";
                 lulu.src = "images/baseNo.png";
                 pointer.src = "images/pointerNo.png";
             }
@@ -65,29 +64,26 @@ function entaoPode(horas, minutos)
             {
                 //pode
                 resp.innerHTML = "SIM";
-                back.src = "images/bgHd.png";
                 lulu.src = "images/baseYes.png";
                 pointer.src = "images/pointerYes.png";
-                
             }
         }
         //dia útil
+        else
         {
             if((horas == 7 && minutos >= 30) ||
             (horas > 7 && horas < 12))
             {
                 // não pode
                 resp.innerHTML = "NÃO";
-                back.src = "images/bgAm.png";
                 lulu.src = "images/baseNo.png";
                 pointer.src = "images/pointerNo.png";
             }
-            else if((horas >= 13 && horas <= 17) ||
+            else if((horas >= 13 && horas < 17) ||
             (horas == 17 && minutos <= 30))
             {
                 //não pode
                 resp.innerHTML = "NÃO";
-                back.src = "images/bgPm.png";
                 lulu.src = "images/baseNo.png";
                 pointer.src = "images/pointerNo.png";
             }
@@ -95,7 +91,6 @@ function entaoPode(horas, minutos)
             {
                 //pode
                 resp.innerHTML = "SIM";
-                back.src = "images/bgPm.png";
                 lulu.src = "images/baseYes.png";
                 pointer.src = "images/pointerYes.png";
             }
@@ -103,11 +98,26 @@ function entaoPode(horas, minutos)
     }
 }
 
+function updateDisk(h)
+{
+    if (holyday) back.src = "images/bgHd.png";
+    else if (saturday)
+    {
+        if (h<=12) back.src = "images/bgAm.png";
+        else back.src = "images/bgHd.png";
+    }
+    else
+    {
+        if (h<=12) back.src = "images/bgAm.png";
+        else back.src = "images/bgPm.png";
+    }
+}
+
 function isHolyday(diaS, dia, mes)
 {
-    if(diaS == 6) return true;
+    if(diaS == 0) return true;
 
-    else if(dia == 1 && mes == 0)    return true;
+    else if(dia == 1 && mes == 0)   return true;
     else if(dia == 19 && mes == 2)  return true;
     else if(dia == 25 && mes == 2)  return true;
     else if(dia == 7 && mes == 3)   return true;
